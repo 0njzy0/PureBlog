@@ -46,9 +46,7 @@ module.exports = {
   /*
    ** Plugins to load before mounting the App
    */
-  plugins: [
-    '~/plugins/vuetify'
-  ],
+  plugins: ['~/plugins/vuetify'],
 
   /*
    ** Nuxt.js modules
@@ -62,6 +60,14 @@ module.exports = {
    */
   axios: {
     // See https://github.com/nuxt-community/axios-module#options
+    host: 'localhost',
+    port: 3000,
+    prefix: '/api/v1',
+    // proxy: true
+  },
+
+  proxy: {
+    // '/api/v1': 'http://localhost:3000'
   },
 
   /*
@@ -71,8 +77,6 @@ module.exports = {
     /*
      ** You can extend webpack config here
      */
-    extend(config, ctx) {
-
-    }
+    extend(config, ctx) {}
   }
 }
