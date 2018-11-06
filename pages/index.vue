@@ -304,69 +304,59 @@
             </v-card-actions>
           </v-card>
         </v-flex>
+        <v-flex md12>
+          <div class="text-xs-center">
+            <v-pagination :value=1 :length="4"></v-pagination>
+          </div>
+        </v-flex>
       </v-layout>
     </v-flex>
-    <v-flex md3 class="right-content">
-      <v-layout column>
-        <v-flex>
-          <v-card>
-            <v-card-title>
-              <h2 class="font-weight-regular">
-                <span class="primary--text font-weight-medium">#</span> 分类
-              </h2>
-            </v-card-title>
-            <v-divider></v-divider>
-            <v-card-text class="px-0 py-0">
-              <v-list dense subheader>
-                <v-list-tile to='/'>
-                  <v-list-tile-title flat>首页</v-list-tile-title>
-                </v-list-tile>
-                <v-list-tile to='/archive'>
-                  <v-list-tile-title>归档</v-list-tile-title>
-                </v-list-tile>
-                <v-list-tile to='/about'>
-                  <v-list-tile-title>关于</v-list-tile-title>
-                </v-list-tile>
-              </v-list>
-            </v-card-text>
-          </v-card>
-        </v-flex>
-        <v-flex>
-          <v-card>
-            <v-card-title>
-              <h2 class="font-weight-regular">
-                <span class="primary--text font-weight-medium">#</span> 标签
-              </h2>
-            </v-card-title>
-            <v-divider></v-divider>
-            <v-card-text>
-              <v-chip outline color="primary" text-color="black">
-                Code
-              </v-chip>
-              <v-chip outline color="primary" text-color="black">
-                Vue
-              </v-chip>
-              <v-chip outline color="primary" text-color="black">
-                JS
-              </v-chip>
-              <v-chip outline color="primary" text-color="black">
-                Node
-              </v-chip>
-            </v-card-text>
-          </v-card>
-        </v-flex>
-      </v-layout>
+    <v-flex md3>
+      <RightMenu />
     </v-flex>
   </v-layout>
 </template>
 
-<style lang="scss">
-.right-content .v-card {
-  .v-card__title,
-  .v-card__text {
-    padding: 8px 16px;
+<script>
+import RightMenu from '~/components/RightMenu'
+export default {
+  // async asyncData({ app }) {
+  //   const { data } = await app.$axios.$get('/blogs')
+  //   console.log(data)
+  //   return { blogs: data }
+  // },
+  name: 'index',
+  components: { RightMenu },
+  data() {
+    return {
+      blogs: []
+    }
+  },
+  created() {
+    this.initData()
+  },
+  methods: {
+    initData() {
+      this.getAllBlogs()
+    },
+    async getAllBlogs() {
+      let res = await this.$axios.$get('/blogs')
+      this.blogs = res.data
+    }
   }
 }
+</script>
+
+<style lang="scss">
+// .right-content .v-card {
+//   .v-card__title,
+//   .v-card__text {
+//     padding: 8px 16px;
+//     .v-btn {
+//       min-width: 40px;
+//     }
+//   }
+// }
 </style>
 <style>
 .blog-title {

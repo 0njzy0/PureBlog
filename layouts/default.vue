@@ -48,9 +48,11 @@
 
 <script>
 export default {
-  data: () => ({
-    drawer: false
-  })
+  data() {
+    return {
+      drawer: false
+    }
+  }
 }
 </script>
 
