@@ -77,13 +77,42 @@ export default {
       this.blogs = res.data
     },
     isMd6(index) {
-      if (
-        !this.blogs[index].cover &&
-        (!this.blogs[index + 1].cover || index + 1 != this.blogs.length)
-      ) {
-        return true
-      } else {
+      let length = this.blogs.length
+      if (this.flag == undefined) {
+        this.flag = true
+      }
+      if (length == 1) {
         return false
+      } else if (length == 2) {
+        if (!this.blogs[0].cover && !this.blogs[1].cover) {
+          return true
+        } else {
+          return false
+        }
+      } else if (index + 1 != length) {
+        if (
+          this.flag &&
+          !this.blogs[index].cover &&
+          !this.blogs[index + 1].cover
+        ) {
+          this.flag = false
+          return true
+        } else if (
+          !this.flag &&
+          !this.blogs[index].cover &&
+          !this.blogs[index - 1].cover
+        ) {
+          this.flag = true
+          return true
+        } else {
+          return false
+        }
+      } else {
+        if (!this.flag) {
+          return true
+        } else {
+          return false
+        }
       }
     }
   }
