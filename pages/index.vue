@@ -6,11 +6,11 @@
           <v-card hover :to="'/blogs/'+blog._id">
             <v-img v-if="blog.cover" :src="blog.cover">
             </v-img>
-            <v-card-title primary-title class="pb-1">
+            <v-card-title primary-title class="py-2">
               <v-layout column>
                 <v-flex>
                   <div class="body-1 font-weight-thin">
-                    <span>{{blog.createTime}}</span> | <span>{{blog.author.name}}</span>
+                    <span>{{$formatTime(blog.createTime)}}</span> | <span>{{blog.author.name}}</span>
                   </div>
                 </v-flex>
                 <v-flex>
@@ -45,7 +45,7 @@
       </v-layout>
     </v-flex>
     <v-flex md3>
-      <RightMenu />
+      <RightMenu :categories='categories' :tags='tags' />
     </v-flex>
   </v-layout>
 </template>
@@ -53,29 +53,24 @@
 <script>
 import RightMenu from '~/components/RightMenu'
 export default {
-  // async asyncData({ app }) {
-  //   const { data } = await app.$axios.$get('/blogs')
-  //   console.log(data)
-  //   return { blogs: data }
-  // },
   name: 'index',
   components: { RightMenu },
-  data() {
-    return {
-      blogs: []
+  async asyncData({ app, error }) {
+    const blogsPromise = app.$axios.$get('/blogs')
+    const categoriesPromise = app.$axios.$get('/categories')
+    const tagsPromise = app.$axios.$get('/tags')
+    try {
+      const [blogs, categories, tags] = await Promise.all([
+        blogsPromise,
+        categoriesPromise,
+        tagsPromise
+      ])
+      return { blogs: blogs.data, categories: categories.data, tags: tags.data }
+    } catch (e) {
+      error({ statusCode: 404, message: e.message })
     }
   },
-  created() {
-    this.initData()
-  },
   methods: {
-    initData() {
-      this.getAllBlogs()
-    },
-    async getAllBlogs() {
-      let res = await this.$axios.$get('/blogs')
-      this.blogs = res.data
-    },
     isMd6(index) {
       let length = this.blogs.length
       if (this.flag == undefined) {

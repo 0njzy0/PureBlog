@@ -1,14 +1,14 @@
 <template>
   <v-layout row wrap>
-    <v-flex md9>
+    <v-flex md12>
       <v-card v-if='blog'>
         <v-img v-if="blog.cover" :src="blog.cover" aspect-ratio="2.75">
         </v-img>
-        <v-card-title primary-title class="pb-1">
+        <v-card-title primary-title class="py-2">
           <v-layout column>
             <v-flex>
               <div class="body-1 font-weight-thin">
-                <span>{{blog.createTime}}</span> | <span>{{blog.author.name}}</span>
+                <span>{{$formatTime(blog.createTime)}}</span> | <span>{{blog.author.name}}</span>
               </div>
             </v-flex>
             <v-flex>
@@ -37,35 +37,14 @@
         </v-card-actions>
       </v-card>
     </v-flex>
-    <v-flex md3>
-      <RightMenu />
-    </v-flex>
   </v-layout>
 </template>
 
 <script>
-import RightMenu from '~/components/RightMenu'
 export default {
-  components: {
-    RightMenu
-  },
-  data() {
-    return {
-      blog: null
-    }
-  },
-  created() {
-    this.initData()
-  },
-  methods: {
-    initData() {
-      this.getBlogById()
-    },
-    async getBlogById() {
-      const id = this.$route.params.id
-      const res = await this.$axios.$get('/blogs/' + id)
-      this.blog = res.data
-    }
+  async asyncData({ app, params }) {
+    const { data } = await app.$axios.$get(`/blogs/${params.id}`)
+    return { blog: data }
   }
 }
 </script>
