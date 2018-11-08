@@ -114,7 +114,7 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 .blog-title {
   height: 40px;
   overflow: hidden;
