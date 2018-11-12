@@ -37,15 +37,15 @@
             </v-card-actions>
           </v-card>
         </v-flex>
-        <v-flex md12>
-          <div class="text-xs-center">
-            <v-pagination :value=1 :length="4"></v-pagination>
-          </div>
-        </v-flex>
       </v-layout>
     </v-flex>
-    <v-flex md3>
+    <v-flex md3 order-md1 order-xs2>
       <RightMenu :categories='categories' :tags='tags' />
+    </v-flex>
+    <v-flex md9 sm12 order-md2 order-xs1 style="align-self:flex-end" v-if="blogs.length">
+      <div class="text-xs-center">
+        <v-pagination v-model="page" :length="length" :total-visible="7" @input="handlePage"></v-pagination>
+      </div>
     </v-flex>
   </v-layout>
 </template>
@@ -53,10 +53,11 @@
 <script>
 import RightMenu from '~/components/RightMenu'
 export default {
-  name: 'index',
   components: { RightMenu },
-  async asyncData({ app, error }) {
-    const blogsPromise = app.$axios.$get('/blogs')
+  watchQuery: ['page'],
+  async asyncData({ app, query, error }) {
+    let page = query.page == undefined ? 1 : parseInt(query.page)
+    const blogsPromise = app.$axios.$get(`/blogs?page=${page}`)
     const categoriesPromise = app.$axios.$get('/categories')
     const tagsPromise = app.$axios.$get('/tags')
     try {
@@ -65,12 +66,35 @@ export default {
         categoriesPromise,
         tagsPromise
       ])
-      return { blogs: blogs.data, categories: categories.data, tags: tags.data }
+      return {
+        blogs: blogs.data,
+        total: blogs.total,
+        limit: blogs.limit,
+        categories: categories.data,
+        tags: tags.data,
+        page
+      }
     } catch (e) {
       error({ statusCode: 404, message: e.message })
     }
   },
+  computed: {
+    length() {
+      if (this.limit >= this.total) {
+        return 1
+      } else {
+        if (this.total % this.limit == 0) {
+          return parseInt(this.total / this.limit)
+        } else {
+          return parseInt(this.total / this.limit + 1)
+        }
+      }
+    }
+  },
   methods: {
+    handlePage() {
+      this.$router.push({ path: '/', query: { page: this.page } })
+    },
     isMd6(index) {
       let length = this.blogs.length
       if (this.flag == undefined) {
@@ -115,6 +139,10 @@ export default {
 </script>
 
 <style lang="scss">
+* {
+  outline: none;
+}
+
 .blog-title {
   height: 40px;
   overflow: hidden;

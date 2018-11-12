@@ -39,14 +39,53 @@
         </v-flex>
       </v-layout>
     </v-flex>
+    <v-flex md12 style="align-self:flex-end" v-if="blogs.length">
+      <div class="text-xs-center">
+        <v-pagination v-model="page" :length="length" :total-visible="7" @input="handlePage"></v-pagination>
+      </div>
+    </v-flex>
   </v-layout>
 </template>
 
 <script>
 export default {
-  async asyncData({ app, params }) {
-    const { data } = await app.$axios.$get(`blogs/tags/${params.id}`)
-    return { blogs: data }
+  watchQuery: ['page'],
+  async asyncData({ app, params, query, error }) {
+    try {
+      let page = query.page == undefined ? 1 : parseInt(query.page)
+      let id = params.id
+      const blogs = await app.$axios.$get(`/blogs/tags/${id}?page=${page}`)
+      return {
+        blogs: blogs.data,
+        total: blogs.total,
+        limit: blogs.limit,
+        page,
+        id
+      }
+    } catch (e) {
+      error({ statusCode: 404, message: e.message })
+    }
+  },
+  computed: {
+    length() {
+      if (this.limit >= this.total) {
+        return 1
+      } else {
+        if (this.total % this.limit == 0) {
+          return parseInt(this.total / this.limit)
+        } else {
+          return parseInt(this.total / this.limit + 1)
+        }
+      }
+    }
+  },
+  methods: {
+    handlePage() {
+      this.$router.push({
+        path: `/tags/${this.id}`,
+        query: { page: this.page }
+      })
+    }
   }
 }
 </script>
