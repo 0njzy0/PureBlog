@@ -1,4 +1,5 @@
 const pkg = require('./package')
+const VuetifyLoaderPlugin = require('vuetify-loader/lib/plugin')
 
 module.exports = {
   mode: 'universal',
@@ -77,6 +78,10 @@ module.exports = {
     /*
      ** You can extend webpack config here
      */
-    extend(config, ctx) {}
+    extend(config, ctx) {},
+    plugins: [new VuetifyLoaderPlugin()],
+    transpile: ['vuetify/lib'],
+    extractCSS: true,
+    optimizeCSS: true,
   }
 }
