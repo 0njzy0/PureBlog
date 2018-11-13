@@ -3,7 +3,7 @@
     <v-flex md9>
       <v-layout row wrap>
         <v-flex v-for="(blog,index) in blogs" :key="index" :class="{md6:isMd6(index)}">
-          <v-card hover :to="'/blogs/'+blog._id">
+          <v-card hover :to="`/blogs/${blog._id}`">
             <v-img v-if="blog.cover" :src="blog.cover">
             </v-img>
             <v-card-title primary-title class="py-2">
@@ -55,7 +55,7 @@ import RightMenu from '~/components/RightMenu'
 export default {
   components: { RightMenu },
   watchQuery: ['page'],
-  async asyncData({ app, query, error }) {
+  async asyncData({ app, store, query, error }) {
     let page = query.page == undefined ? 1 : parseInt(query.page)
     const blogsPromise = app.$axios.$get(`/blogs?page=${page}`)
     const categoriesPromise = app.$axios.$get('/categories')
@@ -66,12 +66,16 @@ export default {
         categoriesPromise,
         tagsPromise
       ])
+      store.commit('setTagsAndCategories', {
+        categories: categories.data,
+        tags: tags.data
+      })
       return {
         blogs: blogs.data,
         total: blogs.total,
         limit: blogs.limit,
-        categories: categories.data,
-        tags: tags.data,
+        categories: store.state.categories,
+        tags: store.state.tags,
         page
       }
     } catch (e) {

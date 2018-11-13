@@ -2,8 +2,14 @@
   <v-layout row wrap>
     <v-flex md12>
       <v-layout row wrap>
+        <v-flex>
+          <p class="headline my-0">
+            <span class="primary--text font-weight-medium">#</span> {{categoryName}}
+            <span class="subheading primary--text text--lighten-1 font-weight-regular">{{total}}篇</span>
+          </p>
+        </v-flex>
         <v-flex v-for="(blog,index) in blogs" :key="index" :class="{md6:isMd6(index)}">
-          <v-card hover :to="'/blogs/'+blog._id">
+          <v-card hover :to="`/blogs/${blog._id}`">
             <v-img v-if="blog.cover" :src="blog.cover">
             </v-img>
             <v-card-title primary-title class="py-2">
@@ -50,10 +56,12 @@
 <script>
 export default {
   watchQuery: ['page'],
-  async asyncData({ app, params, query, error }) {
+  async asyncData({ app, store, params, query, error }) {
     try {
       let page = query.page == undefined ? 1 : parseInt(query.page)
       let id = params.id
+      let categoryName = store.state.categories.find(item => item._id == id)
+        .name
       const blogs = await app.$axios.$get(
         `/blogs/categories/${params.id}?page=${page}`
       )
@@ -62,6 +70,7 @@ export default {
         total: blogs.total,
         limit: blogs.limit,
         page,
+        categoryName,
         id
       }
     } catch (e) {
