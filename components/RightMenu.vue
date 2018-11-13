@@ -11,7 +11,7 @@
           <v-divider></v-divider>
           <v-card-text class="px-0 py-0">
             <v-list dense subheader>
-              <v-list-tile :to="'/categories/'+category._id" v-for="(category,index) in categories" :key="index">
+              <v-list-tile :to="`/categories/${category._id}`" v-for="(category,index) in categories" :key="index">
                 <v-list-tile-title>{{category.name}}</v-list-tile-title>
               </v-list-tile>
             </v-list>
@@ -27,7 +27,7 @@
           </v-card-title>
           <v-divider></v-divider>
           <v-card-text>
-            <v-btn small round outline color="primary" class="mr-0" :to="'/tags/'+tag._id" v-for="(tag,index) in tags" :key="index">{{tag.name}}</v-btn>
+            <v-btn small round outline color="primary" class="mr-0" :to="`/tags/${tag._id}`" v-for="(tag,index) in tags" :key="index">{{tag.name}}</v-btn>
           </v-card-text>
         </v-card>
       </v-flex>
