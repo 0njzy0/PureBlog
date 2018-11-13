@@ -40,7 +40,7 @@
       </v-layout>
     </v-flex>
     <v-flex md3 order-md1 order-xs2>
-      <RightMenu :categories='categories' :tags='tags' />
+      <RightMenu />
     </v-flex>
     <v-flex md9 sm12 order-md2 order-xs1 style="align-self:flex-end" v-if="blogs.length">
       <div class="text-xs-center">
@@ -56,13 +56,24 @@ export default {
   components: { RightMenu },
   watchQuery: ['page'],
   async asyncData({ app, store, query, error }) {
-    let page = query.page == undefined ? 1 : parseInt(query.page)
-    const blogsPromise = app.$axios.$get(`/blogs?page=${page}`)
+    try {
+      let page = query.page == undefined ? 1 : parseInt(query.page)
+      const blogs = await app.$axios.$get(`/blogs?page=${page}`)
+      return {
+        blogs: blogs.data,
+        total: blogs.total,
+        limit: blogs.limit,
+        page
+      }
+    } catch (e) {
+      error({ statusCode: 404, message: e.message })
+    }
+  },
+  async fetch({ app, store }) {
     const categoriesPromise = app.$axios.$get('/categories')
     const tagsPromise = app.$axios.$get('/tags')
     try {
-      const [blogs, categories, tags] = await Promise.all([
-        blogsPromise,
+      const [categories, tags] = await Promise.all([
         categoriesPromise,
         tagsPromise
       ])
@@ -70,14 +81,6 @@ export default {
         categories: categories.data,
         tags: tags.data
       })
-      return {
-        blogs: blogs.data,
-        total: blogs.total,
-        limit: blogs.limit,
-        categories: store.state.categories,
-        tags: store.state.tags,
-        page
-      }
     } catch (e) {
       error({ statusCode: 404, message: e.message })
     }
