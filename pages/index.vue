@@ -1,19 +1,19 @@
 <template>
   <v-layout row wrap>
-    <v-flex md9>
+    <v-flex md9 class="blog-container">
       <v-layout row wrap>
         <v-flex v-for="(blog,index) in blogs" :key="index" :class="{md6:isMd6(index,blog),md12:!blog.isMd6}">
           <BlogCard :blog="blog" />
         </v-flex>
       </v-layout>
+      <v-flex md12 class="pagination" v-if="blogs.length">
+        <div class="text-xs-center">
+          <Pagination path='/' :page='page' :limit='limit' :total='total' />
+        </div>
+      </v-flex>
     </v-flex>
-    <v-flex md3 order-md1 order-xs2>
+    <v-flex md3 class="hidden-sm-and-down">
       <RightMenu />
-    </v-flex>
-    <v-flex md9 sm12 order-md2 order-xs1 style="align-self:flex-end" v-if="blogs.length">
-      <div class="text-xs-center">
-        <Pagination path='/' :page='page' :limit='limit' :total='total' />
-      </div>
     </v-flex>
   </v-layout>
 </template>
@@ -63,5 +63,16 @@ export default {
 <style lang="scss">
 * {
   outline: none;
+}
+
+.blog-container {
+  position: relative;
+  padding-bottom: 50px !important;
+  .pagination {
+    position: absolute;
+    bottom: -10px;
+    right: 0;
+    left: 0;
+  }
 }
 </style>

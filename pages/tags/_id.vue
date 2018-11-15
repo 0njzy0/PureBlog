@@ -1,25 +1,33 @@
 <template>
   <v-layout row wrap>
-    <v-flex md9>
+    <v-flex md12 class="blog-container">
       <v-layout row wrap>
-        <v-flex>
+        <v-flex md12>
           <p class="headline my-0">
             <span class="primary--text font-weight-medium">#</span> {{tagName}}
             <span class="subheading primary--text text--lighten-1 font-weight-regular">{{total}}篇</span>
           </p>
         </v-flex>
-        <v-flex v-for="(blog,index) in blogs" :key="index" :class="{md6:isMd6(index,blog),md12:!blog.isMd6}">
-          <BlogCard :blog="blog" />
+      </v-layout>
+      <v-layout row wrap>
+        <v-flex md9>
+          <v-layout row wrap>
+            <v-flex v-for="(blog,index) in blogs" :key="index" :class="{md6:isMd6(index,blog),md12:!blog.isMd6}">
+              <BlogCard :blog="blog" />
+            </v-flex>
+          </v-layout>
+        </v-flex>
+        <v-flex md3 class="hidden-sm-and-down">
+          <RightMenu />
         </v-flex>
       </v-layout>
-    </v-flex>
-    <v-flex md3 order-md1 order-xs2>
-      <RightMenu />
-    </v-flex>
-    <v-flex md9 sm12 order-md2 order-xs1 style="align-self:flex-end" v-if="blogs.length">
-      <div class="text-xs-center">
-        <Pagination :path="`/tags/${id}`" :page='page' :limit='limit' :total='total' />
-      </div>
+      <v-layout row wrap>
+        <v-flex md9 class="pagination" v-if="blogs.length">
+          <div class="text-xs-center">
+            <Pagination :path="`/categories/${id}`" :page='page' :limit='limit' :total='total' />
+          </div>
+        </v-flex>
+      </v-layout>
     </v-flex>
   </v-layout>
 </template>

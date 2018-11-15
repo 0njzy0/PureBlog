@@ -2,6 +2,7 @@
   <div class="header">
     <v-navigation-drawer app v-model="drawer">
       <v-list>
+        <v-subheader>导航</v-subheader>
         <v-list-tile to='/'>
           <v-list-tile-title>首页</v-list-tile-title>
         </v-list-tile>
@@ -10,6 +11,20 @@
         </v-list-tile>
         <v-list-tile to='/about'>
           <v-list-tile-title>关于</v-list-tile-title>
+        </v-list-tile>
+      </v-list>
+      <v-divider></v-divider>
+      <v-list>
+        <v-subheader>分类</v-subheader>
+        <v-list-tile :to="`/categories/${category._id}`" v-for="(category,index) in $store.state.categories" :key="index">
+          <v-list-tile-title>{{category.name}}</v-list-tile-title>
+        </v-list-tile>
+      </v-list>
+      <v-divider></v-divider>
+      <v-list>
+        <v-subheader>标签</v-subheader>
+        <v-list-tile :to="`/tags/${tag._id}`" v-for="(tag,index) in $store.state.tags" :key="index">
+          <v-list-tile-title>{{tag.name}}</v-list-tile-title>
         </v-list-tile>
       </v-list>
     </v-navigation-drawer>
