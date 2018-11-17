@@ -38,23 +38,7 @@ export default {
         page
       }
     } catch (e) {
-      error({ statusCode: 404, message: e.message })
-    }
-  },
-  async fetch({ app, store, error }) {
-    const categoriesPromise = app.$axios.$get('/categories')
-    const tagsPromise = app.$axios.$get('/tags')
-    try {
-      const [categories, tags] = await Promise.all([
-        categoriesPromise,
-        tagsPromise
-      ])
-      store.commit('setTagsAndCategories', {
-        categories: categories.data,
-        tags: tags.data
-      })
-    } catch (e) {
-      error({ statusCode: 404, message: e.message })
+      error({ statusCode: 404, message: `获取所有博文信息失败:${e.message}` })
     }
   }
 }
