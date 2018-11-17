@@ -42,9 +42,13 @@
 
 <script>
 export default {
-  async asyncData({ app, params }) {
-    const { data } = await app.$axios.$get(`/blogs/${params.id}`)
-    return { blog: data }
+  async asyncData({ app, params, error }) {
+    try {
+      const { data } = await app.$axios.$get(`/blogs/${params.id}`)
+      return { blog: data }
+    } catch (e) {
+      error({ statusCode: 404, message: `获取博文信息失败:${e.message}` })
+    }
   }
 }
 </script>

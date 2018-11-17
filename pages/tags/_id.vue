@@ -56,7 +56,7 @@ export default {
         id
       }
     } catch (e) {
-      error({ statusCode: 404, message: e.message })
+      error({ statusCode: 404, message: `获取博文信息失败:${e.message}` })
     }
   }
 }
