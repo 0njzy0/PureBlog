@@ -1,0 +1,16 @@
+// 分页绝对定位
+.blog-container {
+  position: relative;
+  padding-bottom: 50px !important;
+
+  .pagination {
+    position: absolute;
+    bottom: -10px;
+    right: 0;
+    left: 0;
+
+    button {
+      outline: none;
+    }
+  }
+}

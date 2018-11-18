@@ -43,20 +43,3 @@ export default {
   }
 }
 </script>
-
-<style lang="scss">
-* {
-  outline: none;
-}
-
-.blog-container {
-  position: relative;
-  padding-bottom: 50px !important;
-  .pagination {
-    position: absolute;
-    bottom: -10px;
-    right: 0;
-    left: 0;
-  }
-}
-</style>
