@@ -18,6 +18,9 @@ module.exports = {
         }
       }
     ],
+    'vue/no-use-v-if-with-v-for': ['off'],
+    'vue/component-name-in-template-casing': ['off'],
+    'vue/require-prop-types': ['off'],
     eqeqeq: ['off']
   },
   parserOptions: {
