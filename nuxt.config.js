@@ -9,7 +9,8 @@ module.exports = {
    */
   head: {
     title: pkg.name,
-    meta: [{
+    meta: [
+      {
         charset: 'utf-8'
       },
       {
@@ -22,11 +23,13 @@ module.exports = {
         content: pkg.description
       }
     ],
-    link: [{
-      rel: 'icon',
-      type: 'image/x-icon',
-      href: '/favicon.ico'
-    }]
+    link: [
+      {
+        rel: 'icon',
+        type: 'image/x-icon',
+        href: '/favicon.ico'
+      }
+    ]
   },
 
   /*
@@ -64,7 +67,7 @@ module.exports = {
     // See https://github.com/nuxt-community/axios-module#options
     host: 'localhost',
     port: 3000,
-    prefix: '/api/v1',
+    prefix: '/api/v1'
     // proxy: true
   },
 
@@ -83,6 +86,6 @@ module.exports = {
     plugins: [new VuetifyLoaderPlugin()],
     transpile: ['vuetify/lib'],
     extractCSS: true,
-    optimizeCSS: true,
+    optimizeCSS: true
   }
 }

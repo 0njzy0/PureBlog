@@ -1,16 +1,16 @@
 import Vue from 'vue'
 import Vuetify from 'vuetify/lib'
-import zhHans from "vuetify/es5/locale/zh-Hans";
-import colors from "vuetify/es5/util/colors";
+import zhHans from 'vuetify/es5/locale/zh-Hans'
+import colors from 'vuetify/es5/util/colors'
 
 Vue.use(Vuetify, {
   lang: {
     locales: {
-      "zh-Hans": zhHans
+      'zh-Hans': zhHans
     },
-    current: "zh-Hans"
+    current: 'zh-Hans'
   },
-  iconfont: "mdi",
+  iconfont: 'mdi',
   theme: {
     primary: colors.blue,
     secondary: colors.blue.lighten1,
@@ -18,9 +18,9 @@ Vue.use(Vuetify, {
   },
   options: {
     minifyTheme: function(css) {
-      return process.env.NODE_ENV === 'production' ?
-        css.replace(/[\s|\r\n|\r|\n]/g, '') :
-        css
+      return process.env.NODE_ENV === 'production'
+        ? css.replace(/[\s|\r\n|\r|\n]/g, '')
+        : css
     }
   }
 })

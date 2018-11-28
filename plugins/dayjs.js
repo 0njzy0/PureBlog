@@ -1,5 +1,5 @@
 import dayjs from 'dayjs'
-import Vue from 'vue';
+import Vue from 'vue'
 
 function formatTime(time) {
   let minute = dayjs().diff(time, 'minute')

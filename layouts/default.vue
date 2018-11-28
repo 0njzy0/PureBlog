@@ -1,12 +1,10 @@
 <template>
   <v-app>
-    <Header></Header>
+    <the-header />
     <v-content>
-      <v-container grid-list-md fill-height>
-        <nuxt></nuxt>
-      </v-container>
+      <v-container grid-list-md fill-height> <nuxt /> </v-container>
     </v-content>
-    <Footer></Footer>
+    <the-footer />
   </v-app>
 </template>
 
@@ -15,8 +13,8 @@ import Header from '~/components/Header'
 import Footer from '~/components/Footer'
 export default {
   components: {
-    Header,
-    Footer
+    TheHeader: Header,
+    TheFooter: Footer
   }
 }
 </script>

@@ -1,5 +1,11 @@
 <template>
-  <v-pagination v-if="length>1" :value="page" :length="length" :total-visible="7" @input="handlePage"></v-pagination>
+  <v-pagination
+    v-if="length > 1"
+    :value="page"
+    :length="length"
+    :total-visible="7"
+    @input="handlePage"
+  />
 </template>
 
 <script>
