@@ -5,7 +5,8 @@
         <v-card>
           <v-card-title>
             <h2 class="font-weight-regular">
-              <span class="primary--text font-weight-medium">#</span> 主题
+              <span class="primary--text font-weight-medium">#</span>
+              主题
             </h2>
           </v-card-title>
           <v-divider />
@@ -30,7 +31,8 @@
         <v-card>
           <v-card-title>
             <h2 class="font-weight-regular">
-              <span class="primary--text font-weight-medium">#</span> 分类
+              <span class="primary--text font-weight-medium">#</span>
+              分类
             </h2>
           </v-card-title>
           <v-divider />
@@ -51,7 +53,8 @@
         <v-card>
           <v-card-title>
             <h2 class="font-weight-regular">
-              <span class="primary--text font-weight-medium">#</span> 标签
+              <span class="primary--text font-weight-medium">#</span>
+              标签
             </h2>
           </v-card-title>
           <v-divider />
@@ -65,8 +68,9 @@
               color="primary"
               class="mr-0"
               :to="`/tags/${tag._id}`"
-              >{{ tag.name }}</v-btn
             >
+              {{ tag.name }}
+            </v-btn>
           </v-card-text>
         </v-card>
       </v-flex>

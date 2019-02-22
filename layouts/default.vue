@@ -2,7 +2,7 @@
   <v-app>
     <the-header />
     <v-content>
-      <v-container grid-list-md fill-height> <nuxt /> </v-container>
+      <v-container grid-list-md fill-height><nuxt /></v-container>
     </v-content>
     <the-footer />
   </v-app>

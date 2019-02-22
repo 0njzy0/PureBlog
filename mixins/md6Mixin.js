@@ -17,19 +17,11 @@ const md6Mixin = {
           return false
         }
       } else if (index + 1 != length) {
-        if (
-          this.flag &&
-          !this.blogs[index].cover &&
-          !this.blogs[index + 1].cover
-        ) {
+        if (this.flag && !this.blogs[index].cover && !this.blogs[index + 1].cover) {
           this.flag = false
           blog.isMd6 = true
           return true
-        } else if (
-          !this.flag &&
-          !this.blogs[index].cover &&
-          !this.blogs[index - 1].cover
-        ) {
+        } else if (!this.flag && !this.blogs[index].cover && !this.blogs[index - 1].cover) {
           this.flag = true
           blog.isMd6 = true
           return true

@@ -42,11 +42,7 @@ module.exports = {
   /*
    ** Global CSS
    */
-  css: [
-    '~/assets/css/main.scss',
-    'vuetify/dist/vuetify.min.css',
-    '@mdi/font/css/materialdesignicons.css'
-  ],
+  css: ['~/assets/css/main.scss', 'vuetify/dist/vuetify.min.css', '@mdi/font/css/materialdesignicons.css'],
 
   /*
    ** Plugins to load before mounting the App

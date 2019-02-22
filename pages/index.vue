@@ -2,11 +2,7 @@
   <v-layout row wrap>
     <v-flex md9 class="blog-container">
       <v-layout row wrap>
-        <v-flex
-          v-for="(blog, index) in blogs"
-          :key="index"
-          :class="{ md6: isMd6(index, blog), md12: !blog.isMd6 }"
-        >
+        <v-flex v-for="(blog, index) in blogs" :key="index" :class="{ md6: isMd6(index, blog), md12: !blog.isMd6 }">
           <BlogCard :blog="blog" />
         </v-flex>
       </v-layout>
@@ -16,7 +12,7 @@
         </div>
       </v-flex>
     </v-flex>
-    <v-flex md3 class="hidden-sm-and-down"> <RightMenu /> </v-flex>
+    <v-flex md3 class="hidden-sm-and-down"><RightMenu /></v-flex>
   </v-layout>
 </template>
 

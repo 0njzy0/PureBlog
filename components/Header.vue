@@ -27,21 +27,14 @@
       <v-divider />
       <v-list>
         <v-subheader>标签</v-subheader>
-        <v-list-tile
-          v-for="(tag, index) in $store.state.tags"
-          :key="index"
-          :to="`/tags/${tag._id}`"
-        >
+        <v-list-tile v-for="(tag, index) in $store.state.tags" :key="index" :to="`/tags/${tag._id}`">
           <v-list-tile-title>{{ tag.name }}</v-list-tile-title>
         </v-list-tile>
       </v-list>
     </v-navigation-drawer>
     <v-toolbar app dark color="primary">
       <v-container fill-height py-0>
-        <v-toolbar-side-icon
-          class="hidden-md-and-up mx-0"
-          @click.stop="drawer = !drawer"
-        />
+        <v-toolbar-side-icon class="hidden-md-and-up mx-0" @click.stop="drawer = !drawer" />
         <v-toolbar-title class="ml-0 mr-2">PureBlog</v-toolbar-title>
         <v-toolbar-items class="hidden-sm-and-down">
           <v-btn flat to="/">首页</v-btn>

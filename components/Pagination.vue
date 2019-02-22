@@ -1,17 +1,28 @@
 <template>
-  <v-pagination
-    v-if="length > 1"
-    :value="page"
-    :length="length"
-    :total-visible="7"
-    @input="handlePage"
-  />
+  <v-pagination v-if="length > 1" :value="page" :length="length" :total-visible="7" @input="handlePage" />
 </template>
 
 <script>
 export default {
   name: 'Pagination',
-  props: ['path', 'page', 'limit', 'total'],
+  props: {
+    path: {
+      type: String,
+      required: true
+    },
+    page: {
+      type: Number,
+      default: 1
+    },
+    limit: {
+      type: Number,
+      default: 8
+    },
+    total: {
+      type: Number,
+      default: 0
+    }
+  },
   computed: {
     length() {
       if (this.limit >= this.total) {

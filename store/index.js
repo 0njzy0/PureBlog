@@ -26,10 +26,7 @@ const store = () =>
         try {
           let tagsPromise = app.$axios.$get('/tags')
           let categoriesPromise = app.$axios.$get('/categories')
-          const [tags, categories] = await Promise.all([
-            tagsPromise,
-            categoriesPromise
-          ])
+          const [tags, categories] = await Promise.all([tagsPromise, categoriesPromise])
           commit('setTagsAndCategories', {
             tags: tags.data,
             categories: categories.data

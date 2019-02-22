@@ -7,7 +7,8 @@
           <v-layout column>
             <v-flex>
               <div class="body-1 font-weight-thin">
-                <span>{{ $formatTime(blog.createTime) }}</span> |
+                <span>{{ $formatTime(blog.createTime) }}</span>
+                |
                 <span>{{ blog.author.name }}</span>
               </div>
             </v-flex>
@@ -22,12 +23,12 @@
         <v-card-actions class="pt-0">
           <v-btn-toggle>
             <v-btn flat disabled class="mx-0">
-              <v-icon size="10">mdi-eye</v-icon
-              ><span class="ml-1">{{ blog.views }}</span>
+              <v-icon size="10">mdi-eye</v-icon>
+              <span class="ml-1">{{ blog.views }}</span>
             </v-btn>
             <v-btn flat disabled class="mx-0">
-              <v-icon size="10">mdi-thumb-up</v-icon
-              ><span class="ml-1">{{ blog.likes.length }}</span>
+              <v-icon size="10">mdi-thumb-up</v-icon>
+              <span class="ml-1">{{ blog.likes.length }}</span>
             </v-btn>
           </v-btn-toggle>
           <v-spacer />
