@@ -38,7 +38,11 @@ export default {
   },
   methods: {
     handlePage(page) {
-      this.$router.push({ path: this.path, query: { page } })
+      if (page == 1) {
+        this.$router.push({ path: this.path })
+      } else {
+        this.$router.push({ path: this.path, query: { page } })
+      }
     }
   }
 }
