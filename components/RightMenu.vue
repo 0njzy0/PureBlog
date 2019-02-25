@@ -90,7 +90,7 @@ export default {
   },
   created() {
     if (process.browser) {
-      this.initTheme()
+      setTimeout(this.initTheme, 0)
     }
   },
   methods: {
