@@ -84,26 +84,18 @@ export default {
   name: 'RightMenu',
   data() {
     return {
-      themes: [colors.blue, colors.orange, colors.green, colors.red],
-      defaultTheme: ''
+      themes: [colors.blue, colors.orange, colors.green, colors.red]
     }
   },
-  created() {
-    if (process.browser) {
-      setTimeout(this.initTheme, 0)
+  computed: {
+    defaultTheme() {
+      return this.$store.state.theme
     }
   },
   methods: {
-    initTheme() {
-      if (window.localStorage.defaultTheme) {
-        var theme = JSON.parse(window.localStorage.defaultTheme)
-      }
-      this.defaultTheme = theme ? theme.base : colors.blue.base
-      this.$vuetify.theme.primary = theme || colors.blue
-    },
     handleThemeCheck(theme) {
       window.localStorage.defaultTheme = JSON.stringify(theme)
-      this.defaultTheme = theme.base
+      this.$store.commit('setTheme', theme.base)
       this.$vuetify.theme.primary = theme
     }
   }

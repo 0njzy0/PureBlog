@@ -11,10 +11,13 @@
 <script>
 import Header from '~/components/Header'
 import Footer from '~/components/Footer'
+import initTheme from '~/mixins/initTheme'
+
 export default {
   components: {
     TheHeader: Header,
     TheFooter: Footer
-  }
+  },
+  mixins: [initTheme]
 }
 </script>

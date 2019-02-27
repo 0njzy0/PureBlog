@@ -1,9 +1,13 @@
 export const state = () => ({
+  theme: '',
   tags: [],
   categories: []
 })
 
 export const mutations = {
+  setTheme(state, theme) {
+    state.theme = theme
+  },
   setTagsAndCategories(state, payload) {
     state.tags = payload.tags
     state.categories = payload.categories
