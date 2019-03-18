@@ -42,12 +42,17 @@ module.exports = {
   /*
    ** Global CSS
    */
-  css: ['~/assets/css/main.scss', 'vuetify/dist/vuetify.min.css', '@mdi/font/css/materialdesignicons.css'],
+  css: [
+    'vuetify/dist/vuetify.min.css',
+    '@mdi/font/css/materialdesignicons.css',
+    'element-ui/lib/theme-chalk/index.css',
+    '~/assets/css/main.scss'
+  ],
 
   /*
    ** Plugins to load before mounting the App
    */
-  plugins: ['~/plugins/vuetify', '~/plugins/dayjs'],
+  plugins: ['~/plugins/vuetify', '~/plugins/element-ui', '~/plugins/dayjs', '~/plugins/axios'],
 
   /*
    ** Nuxt.js modules
