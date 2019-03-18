@@ -1,5 +1,5 @@
 <template>
-  <v-app>
+  <v-app class="home">
     <the-header />
     <v-content>
       <v-container grid-list-md fill-height><nuxt /></v-container>

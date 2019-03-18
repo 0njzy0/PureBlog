@@ -1,7 +1,9 @@
-// 调整xl断点下宽度与lg一致
-@media only screen and (min-width: 1904px) {
-  .container {
-    max-width: 1185px;
+// 调整前台xl断点下宽度与lg一致
+.home {
+  @media only screen and (min-width: 1904px) {
+    .container {
+      max-width: 1185px;
+    }
   }
 }
 
