@@ -1,5 +1,6 @@
 export const state = () => ({
   theme: '',
+  token: '',
   tags: [],
   categories: []
 })
@@ -7,6 +8,9 @@ export const state = () => ({
 export const mutations = {
   setTheme(state, theme) {
     state.theme = theme
+  },
+  setToken(state, token) {
+    state.token = token
   },
   setTagsAndCategories(state, payload) {
     state.tags = payload.tags
