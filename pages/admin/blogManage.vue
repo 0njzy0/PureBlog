@@ -1,165 +1,79 @@
 <template>
   <!-- 文章管理 -->
-  <v-layout row>
-    <v-flex xs12>
-      <v-card height="100%">
-        <v-card-title class="py-2">
-          <v-text-field
-            v-model="listQuery.name"
-            clearable
-            single-line
-            hide-details
-            label="根据标题搜索"
-            class="py-0 my-0"
-            style="max-width:300px"
-          />
-          <v-spacer />
-          <v-btn color="primary" @click="handleSearch">
-            <v-icon left dark>mdi-magnify</v-icon>
-            查询
-          </v-btn>
-          <v-btn @click="handleCreate">
-            <v-icon left dark>mdi-plus</v-icon>
-            添加
-          </v-btn>
-        </v-card-title>
-        <el-table class="px-3" :data="list" height="calc(100% - 123px)">
-          <el-table-column prop="title" label="标题" />
-          <el-table-column prop="author.name" label="作者" />
-          <el-table-column prop="category.name" label="类别" />
-          <el-table-column prop="status" label="状态" />
-          <el-table-column prop="createTime" label="创建时间" />
-          <el-table-column prop="updateTime" label="更新时间" />
-          <el-table-column fixed="right" label="操作">
-            <template slot-scope="{ row }">
-              <v-icon class="mr-2" @click="handleUpdate(row)">
-                mdi-file-document-edit
-              </v-icon>
-              <v-icon @click="handleDelete(row)">
-                mdi-delete
-              </v-icon>
-            </template>
-          </el-table-column>
-        </el-table>
-        <v-card-title class="py-2" style="justify-content:flex-end">
-          <v-pagination v-model="listQuery.page" :length="8" />
-        </v-card-title>
-      </v-card>
-    </v-flex>
-    <v-dialog v-model="dialog" persistent max-width="600px">
-      <v-card>
-        <v-card-title primary-title>
-          <span class="headline">文章信息</span>
-        </v-card-title>
-        <v-card-text>
-          <v-form ref="form">
-            <v-text-field v-model="formData.name" required :rules="nameRules" label="标题" type="text" />
-          </v-form>
-        </v-card-text>
-        <v-card-actions>
-          <v-spacer />
-          <v-btn flat @click="handleDialogClose">关闭</v-btn>
-          <v-btn v-if="dialogStatus == 'create'" color="primary" flat @click="createData">保存</v-btn>
-          <v-btn v-else color="primary" @click="updateData">更新</v-btn>
-        </v-card-actions>
-      </v-card>
-    </v-dialog>
-  </v-layout>
+  <el-card>
+    <div slot="header">
+      <span>控制台</span>
+      <el-button style="float: right; padding: 3px 20px" type="text" icon="el-icon-plus" @click="handleCreate">
+        添加
+      </el-button>
+      <el-button style="float: right; padding: 3px 0" type="text" icon="el-icon-search" @click="handleSearch">
+        查询
+      </el-button>
+    </div>
+    <el-table :data="list" height="auto">
+      <el-table-column prop="title" label="标题" min-width="150" />
+      <el-table-column prop="author.name" label="作者" />
+      <el-table-column prop="category.name" label="类别" />
+      <el-table-column prop="status" label="状态" />
+      <el-table-column prop="createTime" label="创建时间" />
+      <el-table-column prop="updateTime" label="更新时间" />
+      <el-table-column fixed="right" label="操作">
+        <template slot-scope="{ row }">
+          <el-button type="text" size="small" icon="el-icon-edit" @click="handleUpdate(row)">修改</el-button>
+          <el-button type="text" size="small" icon="el-icon-delete" @click="handleDelete(row)">删除</el-button>
+        </template>
+      </el-table-column>
+    </el-table>
+    <div class="card-pagination">
+      <el-pagination
+        background
+        :current-page="1"
+        :page-sizes="[100, 200, 300, 400]"
+        :page-size="100"
+        layout="total, sizes, prev, pager, next, jumper"
+        :total="400"
+      />
+    </div>
+    <el-dialog title="文章信息" :visible.sync="dialogVisable" @close="handleDialogClose">
+      <el-form ref="form" :model="formData" :rules="formRules">
+        <el-form-item label="标题" prop="title">
+          <el-input v-model="formData.title" />
+        </el-form-item>
+      </el-form>
+      <div slot="footer" class="dialog-footer">
+        <el-button @click="handleDialogClose">取消</el-button>
+        <el-button v-if="dialogStatus == 'create'" type="primary" @click="createData">保存</el-button>
+        <el-button v-else-if="dialogStatus == 'update'" type="primary" @click="updateData">更新</el-button>
+      </div>
+    </el-dialog>
+  </el-card>
 </template>
 
 <script>
+import curd from '~/mixins/curd'
+
 export default {
   layout: 'admin',
+  mixins: [curd],
   data: () => ({
+    apiSuffix: 'blogs',
     listQuery: {
       name: '',
       page: 1
     },
     total: 0,
-    list: [],
-    dialog: false,
-    dialogStatus: 'create',
     formData: {
-      name: ''
+      title: ''
     },
-    nameRules: [v => !!v || '请输入标题']
+    formRules: {
+      title: [{ required: true, message: '请输入标题', trigger: 'change' }]
+    }
   }),
   created() {
     if (process.client) {
       this.getList()
     }
   },
-  methods: {
-    handleSearch() {
-      this.getList()
-    },
-    handleCreate() {
-      this.dialogStatus = 'create'
-      this.dialog = true
-    },
-    handleUpdate(row) {
-      this.dialogStatus = 'update'
-      this.formData = JSON.parse(JSON.stringify(row))
-      this.dialog = true
-    },
-    handleDelete(row) {
-      this.$confirm('确认删除该数据？', '提示', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
-        type: 'warning'
-      })
-        .then(() => {
-          this.deleteData(row)
-        })
-        .catch(() => {
-          this.$message({
-            type: 'info',
-            message: '已取消删除'
-          })
-        })
-    },
-    handleSizeChange() {},
-    handleCurrentChange() {},
-    handleDialogClose() {
-      this.dialog = false
-      this.$refs.form.reset()
-    },
-    async getList() {
-      const res = await this.$axios.$get('/blogs')
-      if (res && res.success) {
-        this.list = res.data
-      }
-    },
-    async createData() {
-      if (this.$refs.form.validate()) {
-        const res = await this.$axios.$post(`/blogs`, this.formData)
-        if (res && res.success) {
-          this.getList()
-          this.handleDialogClose()
-        }
-      }
-    },
-    async updateData() {
-      const id = this.formData._id
-      if (this.$refs.form.validate()) {
-        const res = await this.$axios.$put(`/blogs/${id}`, this.formData)
-        if (res && res.success) {
-          this.getList()
-          this.handleDialogClose()
-        }
-      }
-    },
-    async deleteData(data) {
-      const id = data._id
-      const res = await this.$axios.$delete(`/blogs/${id}`)
-      if (res && res.success) {
-        this.$message({
-          type: 'success',
-          message: '删除成功!'
-        })
-        this.getList()
-      }
-    }
-  }
+  methods: {}
 }
 </script>
