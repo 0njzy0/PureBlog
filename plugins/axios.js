@@ -1,4 +1,4 @@
-export default ({ app, store, $axios }) => {
+export default ({ app, route, store, $axios }) => {
   $axios.onRequest(config => {
     if (store.state.token) {
       config.headers['Authorization'] = `Bearer ${store.state.token}`
@@ -10,7 +10,8 @@ export default ({ app, store, $axios }) => {
       return app.$message({
         message: data.message,
         type: 'warning',
-        center: true
+        center: true,
+        customClass: route.path.includes('login') ? 'login-el-message' : ''
       })
     }
   })

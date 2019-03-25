@@ -1,39 +1,19 @@
 <template>
-  <v-layout align-center justify-center>
-    <v-flex md8>
-      <v-card class="elevation-12">
-        <v-toolbar dark color="primary">
-          <v-toolbar-title>PureBlog-Admin</v-toolbar-title>
-        </v-toolbar>
-        <v-card-text>
-          <v-form ref="form">
-            <v-text-field
-              v-model="formData.name"
-              :rules="nameRules"
-              required
-              prepend-icon="mdi-account"
-              name="login"
-              label="用户名"
-              type="text"
-            />
-            <v-text-field
-              v-model="formData.password"
-              :rules="pwdRules"
-              required
-              prepend-icon="mdi-lock"
-              name="password"
-              label="密码"
-              type="password"
-            />
-          </v-form>
-        </v-card-text>
-        <v-card-actions>
-          <v-spacer />
-          <v-btn color="primary" @click="handleLogin">登录</v-btn>
-        </v-card-actions>
-      </v-card>
-    </v-flex>
-  </v-layout>
+  <div>
+    <h1>PureBlog-Admin</h1>
+    <el-form ref="form" label-position="top" :hide-required-asterisk="true" :model="formData" :rules="formRules">
+      <el-form-item label="用户名" prop="name">
+        <el-input v-model.trim="formData.name" clearable autofocus />
+      </el-form-item>
+      <el-form-item label="密码" prop="password">
+        <el-input v-model.trim="formData.password" clearable show-password />
+      </el-form-item>
+      <el-form-item>
+        <el-button type="primary" @click="handleLogin">登录</el-button>
+        <el-button plain>注册</el-button>
+      </el-form-item>
+    </el-form>
+  </div>
 </template>
 
 <script>
@@ -45,18 +25,35 @@ export default {
         name: '',
         password: ''
       },
-      nameRules: [v => !!v || '请输入用户名'],
-      pwdRules: [v => !!v || '请输入密码']
+      formRules: {
+        name: [{ required: true, message: '请输入名户名', trigger: 'change' }],
+        password: [{ required: true, message: '请输入密码', trigger: 'change' }]
+      }
     }
   },
   methods: {
     async handleLogin() {
-      if (this.$refs.form.validate()) {
+      const isValidate = await this.validateForm()
+      if (isValidate) {
         const res = await this.$axios.$post('/login', this.formData)
         if (res && res.success) {
+          this.$notify({
+            title: '成功',
+            message: '欢迎登录',
+            type: 'success',
+            duration: 1200
+          })
           this.$store.commit('setToken', res.data.token)
           this.$router.push('/admin')
         }
+      }
+    },
+    async validateForm() {
+      try {
+        const isValidate = await this.$refs.form.validate()
+        return isValidate
+      } catch (error) {
+        return false
       }
     }
   }
