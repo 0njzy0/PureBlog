@@ -4,6 +4,11 @@ const pkg = require('./package')
 module.exports = {
   mode: 'universal',
 
+  server: {
+    host: 'localhost',
+    port: 8080
+  },
+
   /*
    ** Headers of the page
    */
@@ -46,13 +51,20 @@ module.exports = {
     'vuetify/dist/vuetify.min.css',
     '@mdi/font/css/materialdesignicons.css',
     'element-ui/lib/theme-chalk/index.css',
+    'mavon-editor/dist/css/index.css',
     '~/assets/css/main.scss'
   ],
 
   /*
    ** Plugins to load before mounting the App
    */
-  plugins: ['~/plugins/vuetify', '~/plugins/element-ui', '~/plugins/dayjs', '~/plugins/axios'],
+  plugins: [
+    '~/plugins/vuetify',
+    '~/plugins/element-ui',
+    '~/plugins/dayjs',
+    '~/plugins/axios',
+    { src: '@/plugins/vue-mavon-editor', srr: false }
+  ],
 
   /*
    ** Nuxt.js modules
