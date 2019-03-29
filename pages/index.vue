@@ -2,7 +2,7 @@
   <v-layout row wrap>
     <v-flex md9 class="blog-container">
       <v-layout row wrap>
-        <v-flex v-for="(blog, index) in blogs" :key="index" :class="{ md6: isMd6(index, blog), md12: !blog.isMd6 }">
+        <v-flex v-for="(blog, index) in blogs" :key="index">
           <BlogCard :blog="blog" />
         </v-flex>
       </v-layout>
@@ -20,10 +20,9 @@
 import BlogCard from '~/components/BlogCard'
 import RightMenu from '~/components/RightMenu'
 import Pagination from '~/components/Pagination'
-import md6Mixin from '~/mixins/md6Mixin'
+
 export default {
   components: { BlogCard, RightMenu, Pagination },
-  mixins: [md6Mixin],
   watchQuery: ['page'],
   async asyncData({ app, store, query, error }) {
     try {

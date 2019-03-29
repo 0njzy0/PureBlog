@@ -1,7 +1,12 @@
 <template>
   <div class="footer">
-    <v-footer inverted-scroll>
-      <v-layout justify-center row wrap><v-flex text-xs-center xs12>&copy;2018 — PureBlog By NJZY</v-flex></v-layout>
+    <v-footer height="45">
+      <v-layout justify-center row wrap>
+        <v-flex text-xs-center xs12>
+          Powered by
+          <a href="https://github.com/0njzy0/PureBlog" target="_blank">PureBlog</a>
+        </v-flex>
+      </v-layout>
     </v-footer>
   </div>
 </template>
@@ -11,3 +16,9 @@ export default {
   name: 'Footer'
 }
 </script>
+
+<style lang="scss" scoped>
+.footer a {
+  text-decoration: none;
+}
+</style>

@@ -1,39 +1,33 @@
 <template>
   <div class="blog-card">
     <v-card hover :to="`/blogs/${blog._id}`">
-      <v-img v-if="blog.cover" :src="blog.cover" />
       <v-card-title primary-title class="py-2">
-        <v-layout column>
-          <v-flex>
-            <div class="px-1 my-1 body-1 grey--text">
-              <v-layout>
-                <v-avatar :size="20"><img :src="blog.author.avatar" alt="avatar" /></v-avatar>
-                <span class="ml-1">{{ blog.author.name }}</span>
-                <v-spacer />
-              </v-layout>
-            </div>
+        <v-layout row wrap>
+          <v-flex xs12 order-md1 order-xs2 :class="{ md8: blog.cover }">
+            <v-layout column>
+              <v-flex>
+                <div class="px-1 my-1 body-1 grey--text">
+                  <v-layout>
+                    <v-avatar :size="20"><img :src="blog.author.avatar" alt="avatar" /></v-avatar>
+                    <span class="ml-2 text-uppercase primary--text text--darken-1">{{ blog.author.name }}</span>
+                    <v-spacer />
+                  </v-layout>
+                </div>
+              </v-flex>
+              <v-flex>
+                <h3 class="title card-blog-title">
+                  {{ blog.title }}
+                </h3>
+              </v-flex>
+              <v-flex>
+                <div class="body-1 card-blog-overview">
+                  {{ blog.overView || blog.content }}
+                </div>
+              </v-flex>
+            </v-layout>
           </v-flex>
-          <v-flex>
-            <h3
-              :class="{
-                title: true,
-                'card-blog-title': true,
-                'md6-title': blog.isMd6
-              }"
-            >
-              {{ blog.title }}
-            </h3>
-          </v-flex>
-          <v-flex>
-            <div
-              :class="{
-                'body-1': true,
-                'card-blog-overview': true,
-                'md6-overview': blog.isMd6
-              }"
-            >
-              {{ blog.content }}
-            </div>
+          <v-flex v-if="blog.cover" xs12 md4 order-md2 order-xs1>
+            <v-img v-if="blog.cover" height="150px" :src="blog.cover" />
           </v-flex>
         </v-layout>
       </v-card-title>
@@ -49,7 +43,7 @@
           </v-layout>
         </div>
         <v-spacer />
-        <v-btn flat small color="primary" style="min-width:0" class="px-1">阅读全文</v-btn>
+        <v-btn flat small color="primary darken-2" style="min-width:0" class="px-1">阅读全文</v-btn>
       </v-card-actions>
     </v-card>
   </div>

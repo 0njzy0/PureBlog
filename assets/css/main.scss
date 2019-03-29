@@ -1,4 +1,4 @@
-// 调整前台xl断点下宽度与lg一致
+// 前台xl断点下宽度与lg一致
 .home {
   @media only screen and (min-width: 1904px) {
     .container {
@@ -7,7 +7,7 @@
   }
 }
 
-// 分页绝对定位
+// 前台分页绝对定位
 .blog-container {
   position: relative;
   padding-bottom: 50px !important;
@@ -21,5 +21,35 @@
     button {
       outline: none;
     }
+  }
+}
+
+// 移除vuetify自带的code样式
+code {
+  box-shadow: none;
+}
+
+// 调整mavonEditor默认样式
+.v-note-wrapper {
+  z-index: 1 !important;
+  min-width: 0px !important;
+  min-height: 0px !important;
+  transition: none !important;
+  .v-note-show {
+    transition: none !important;
+  }
+}
+
+.v-note-panel {
+  border: none !important;
+}
+
+.v-note-show {
+  .v-show-content {
+    padding: 12px !important;
+    background: none !important;
+  }
+  pre {
+    padding: 0px !important;
   }
 }

@@ -11,7 +11,7 @@
           </v-card-title>
           <v-divider />
           <v-card-text class="px-0 py-0">
-            <v-layout row class="mx-0 my-0" justify-space-around>
+            <v-layout row wrap class="mx-0 my-0" justify-space-between>
               <v-btn
                 v-for="(theme, index) in themes"
                 :key="index"

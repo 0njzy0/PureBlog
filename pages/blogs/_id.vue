@@ -2,40 +2,34 @@
   <v-layout row wrap>
     <v-flex md12>
       <v-card v-if="blog">
-        <v-img v-if="blog.cover" :src="blog.cover" aspect-ratio="2.75" />
+        <v-img v-if="blog.cover" :src="blog.cover" aspect-ratio="4" />
         <v-card-title primary-title class="py-2">
           <v-layout column>
             <v-flex>
-              <div class="body-1 font-weight-thin">
-                <span>{{ $formatTime(blog.createTime) }}</span>
-                |
+              <div class="title font-weight-medium text-xs-center px-2">{{ blog.title }}</div>
+            </v-flex>
+            <v-flex>
+              <div class="px-2 subheading font-weight-light text-uppercase text-xs-center">
                 <span>{{ blog.author.name }}</span>
+                <span>/ {{ $dayjs(blog.createTime).format('YYYY-MM-DD') }}</span>
+                <template v-if="blog.category">
+                  <span>/ {{ blog.category.name }}</span>
+                </template>
               </div>
             </v-flex>
             <v-flex>
-              <h3 class="title">{{ blog.title }}</h3>
-            </v-flex>
-            <v-flex>
-              <div>{{ blog.content }}</div>
+              <no-ssr>
+                <mavon-editor
+                  :value="blog.content"
+                  :toolbars-flag="false"
+                  :box-shadow="false"
+                  :subfield="false"
+                  default-open="preview"
+                />
+              </no-ssr>
             </v-flex>
           </v-layout>
         </v-card-title>
-        <v-card-actions class="pt-0">
-          <v-btn-toggle>
-            <v-btn flat disabled class="mx-0">
-              <v-icon size="10">mdi-eye</v-icon>
-              <span class="ml-1">{{ blog.views }}</span>
-            </v-btn>
-            <v-btn flat disabled class="mx-0">
-              <v-icon size="10">mdi-thumb-up</v-icon>
-              <span class="ml-1">{{ blog.likes.length }}</span>
-            </v-btn>
-          </v-btn-toggle>
-          <v-spacer />
-          <v-avatar :size="20">
-            <img :src="blog.author.avatar" alt="avatar" />
-          </v-avatar>
-        </v-card-actions>
       </v-card>
     </v-flex>
   </v-layout>
