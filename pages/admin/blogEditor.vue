@@ -68,6 +68,7 @@ export default {
   layout: 'admin',
   data() {
     return {
+      blogEditorStatus: 'create',
       categories: this.$store.state.categories,
       tags: this.$store.state.tags,
       formData: {
@@ -103,7 +104,14 @@ export default {
       }
     }
   },
+  created() {
+    if (process.client) {
+      const blogId = this.$route.query.id
+      this.initBlog(blogId)
+    }
+  },
   mounted() {
+    // console.log(this.$route.query)
     // let codeMirrorElement = document.getElementById('codeMirror')
     // CodeMirror.fromTextArea(codeMirrorElement, {
     //   mode: 'gfm',
@@ -118,7 +126,18 @@ export default {
     // })
   },
   methods: {
-    handleEditorChange(value, render) {},
+    handleEditorChange(value, render) {
+      this.initBlog()
+    },
+    async initBlog(blogId) {
+      if (blogId) {
+        this.blogEditorStatus = 'update'
+        const { data } = await this.$axios.$get(`blogs/${blogId}`)
+        data.category = data.category._id || ''
+        data.tags = data.tags ? data.tags.map(item => item._id) : []
+        this.formData = data
+      }
+    },
     async saveDataToDraft() {},
     async publishData() {
       if (!this.formData.content) {
@@ -131,7 +150,12 @@ export default {
       const isValidate = await this.validateForm()
       if (isValidate) {
         if (this.formData.category == '') this.formData.category = null
-        const res = await this.$axios.$post(`/blogs`, this.formData)
+        let res
+        if (this.blogEditorStatus == 'create') {
+          res = await this.$axios.$post(`/blogs`, this.formData)
+        } else {
+          res = await this.$axios.$put(`/blogs/${this.formData._id}`, this.formData)
+        }
         if (res && res.success) {
           this.$message({
             type: 'success',

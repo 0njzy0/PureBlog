@@ -3,20 +3,26 @@
   <el-card>
     <div slot="header">
       <span>控制台</span>
-      <el-button style="float: right; padding: 3px 20px" type="text" icon="el-icon-plus" @click="handleCreate">
-        添加
-      </el-button>
       <el-button style="float: right; padding: 3px 0" type="text" icon="el-icon-search" @click="handleSearch">
         查询
       </el-button>
     </div>
     <el-table :data="list" height="auto">
       <el-table-column prop="title" label="标题" min-width="150" />
+      <el-table-column prop="overView" label="概述" min-width="150" />
       <el-table-column prop="author.name" label="作者" />
       <el-table-column prop="category.name" label="类别" />
       <el-table-column prop="status" label="状态" />
-      <el-table-column prop="createTime" label="创建时间" />
-      <el-table-column prop="updateTime" label="更新时间" />
+      <el-table-column prop="createTime" label="创建时间">
+        <template slot-scope="{ row }">
+          <span>{{ row.createTime ? $dayjs(row.createTime).format('YYYY-MM-DD HH:mm') : '' }}</span>
+        </template>
+      </el-table-column>
+      <el-table-column prop="updateTime" label="更新时间">
+        <template slot-scope="{ row }">
+          <span>{{ row.updateTime ? $dayjs(row.updateTime).format('YYYY-MM-DD HH:mm') : '' }}</span>
+        </template>
+      </el-table-column>
       <el-table-column fixed="right" label="操作">
         <template slot-scope="{ row }">
           <el-button type="text" size="small" icon="el-icon-edit" @click="handleUpdate(row)">修改</el-button>
@@ -74,6 +80,11 @@ export default {
       this.getList()
     }
   },
-  methods: {}
+  methods: {
+    handleUpdate(data) {
+      const blogId = data._id
+      this.$router.push(`/admin/blogEditor?id=${blogId}`)
+    }
+  }
 }
 </script>

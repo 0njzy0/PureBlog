@@ -99,7 +99,7 @@ export default {
       console.log(key, keyPath)
     },
     handleCreateBlog() {
-      this.$router.push('/admin/createBlog')
+      this.$router.push('/admin/blogEditor')
     }
   }
 }
