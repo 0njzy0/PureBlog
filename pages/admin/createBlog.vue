@@ -11,7 +11,6 @@
             :box-shadow="false"
             :subfield="false"
             default-open="edit"
-            code-style="atom-one-dark"
             @change="handleEditorChange"
           />
         </no-ssr>
@@ -21,7 +20,10 @@
       <el-card class="blog-create">
         <el-form ref="form" label-position="top" :model="formData" :rules="formRules" style="height:100%">
           <el-form-item label="标题" prop="title">
-            <el-input v-model="formData.title" clearable placeholder="请输入" style="width:100%" />
+            <el-input v-model.trim="formData.title" clearable placeholder="请输入" style="width:100%" />
+          </el-form-item>
+          <el-form-item label="概述" prop="overView">
+            <el-input v-model.trim="formData.overView" type="textarea" :rows="2" placeholder="请输入" />
           </el-form-item>
           <el-form-item label="类别">
             <el-select v-model="formData.category" clearable placeholder="请选择" style="width:100%">
@@ -70,13 +72,15 @@ export default {
       tags: this.$store.state.tags,
       formData: {
         title: '',
+        overView: '',
         content: '',
         category: '',
         tags: [],
         cover: ''
       },
       formRules: {
-        title: [{ required: true, message: '标题不能为空', trigger: 'change' }]
+        title: [{ required: true, message: '标题不能为空', trigger: 'change' }],
+        overView: [{ required: true, message: '概述不能为空', trigger: 'change' }]
       },
       toolbars: {
         link: true, // 链接
@@ -114,9 +118,7 @@ export default {
     // })
   },
   methods: {
-    handleEditorChange(value, render) {
-      // console.log(value, render)
-    },
+    handleEditorChange(value, render) {},
     async saveDataToDraft() {},
     async publishData() {
       if (!this.formData.content) {
@@ -181,14 +183,6 @@ export default {
       padding: 12px !important;
     }
   }
-  .v-note-show {
-    .v-show-content {
-      padding: 12px;
-    }
-    pre {
-      padding: 0px;
-    }
-  }
   .CodeMirror {
     height: 100%;
     position: absolute;
@@ -200,9 +194,6 @@ export default {
   .el-upload,
   .el-upload-dragger {
     width: 100%;
-  }
-  code {
-    box-shadow: none;
   }
 }
 </style>
