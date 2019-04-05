@@ -33,11 +33,13 @@
     <div class="card-pagination">
       <el-pagination
         background
-        :current-page="1"
-        :page-sizes="[100, 200, 300, 400]"
-        :page-size="100"
+        :current-page="listQuery.page"
+        :page-sizes="[3, 5, 10, 20]"
+        :page-size="20"
         layout="total, sizes, prev, pager, next, jumper"
-        :total="400"
+        :total="total"
+        @size-change="handleSizeChange"
+        @current-change="handleCurrentChange"
       />
     </div>
     <el-dialog title="文章信息" :visible.sync="dialogVisable" @close="handleDialogClose">
@@ -64,8 +66,8 @@ export default {
   data: () => ({
     apiSuffix: 'blogs',
     listQuery: {
-      name: '',
-      page: 1
+      page: 1,
+      limit: 20
     },
     total: 0,
     formData: {
@@ -84,6 +86,14 @@ export default {
     handleUpdate(data) {
       const blogId = data._id
       this.$router.push(`/admin/blogEditor?id=${blogId}`)
+    },
+    handleSizeChange(val) {
+      this.listQuery.limit = val
+      this.getList()
+    },
+    handleCurrentChange(val) {
+      this.listQuery.page = val
+      this.getList()
     }
   }
 }

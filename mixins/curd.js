@@ -45,8 +45,14 @@ export default {
       this.dialogVisable = false
     },
     async getList() {
-      const res = await this.$axios.$get(`/${this.apiSuffix}`)
+      let res
+      if (this.listQuery.page && this.listQuery.limit) {
+        res = await this.$axios.$get(`/${this.apiSuffix}?page=${this.listQuery.page}&limit=${this.listQuery.limit}`)
+      } else {
+        res = await this.$axios.$get(`/${this.apiSuffix}`)
+      }
       if (res && res.success) {
+        this.total = res.total
         this.list = res.data
       }
     },
