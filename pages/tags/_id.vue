@@ -12,7 +12,7 @@
       </v-layout>
       <v-layout row wrap>
         <v-flex md9>
-          <v-layout row wrap>
+          <v-layout column wrap>
             <v-flex v-for="(blog, index) in blogs" :key="index">
               <BlogCard :blog="blog" />
             </v-flex>
