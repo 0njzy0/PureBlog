@@ -11,7 +11,6 @@
             :box-shadow="false"
             :subfield="false"
             default-open="edit"
-            @change="handleEditorChange"
           />
         </no-ssr>
       </el-card>
@@ -55,15 +54,6 @@
 </template>
 
 <script>
-// if (process.client) {
-//   var CodeMirror = require('codemirror/lib/codemirror')
-//   require('codemirror/lib/codemirror.css')
-//   require('codemirror/addon/edit/continuelist')
-//   require('codemirror/mode/gfm/gfm')
-//   require('codemirror/mode/javascript/javascript')
-//   require('codemirror/mode/vue/vue')
-// }
-
 export default {
   layout: 'admin',
   data() {
@@ -104,38 +94,35 @@ export default {
       }
     }
   },
+  watch: {
+    $route: function(val) {
+      this.initBlog(val.query.id)
+    }
+  },
   created() {
     if (process.client) {
       const blogId = this.$route.query.id
       this.initBlog(blogId)
     }
   },
-  mounted() {
-    // console.log(this.$route.query)
-    // let codeMirrorElement = document.getElementById('codeMirror')
-    // CodeMirror.fromTextArea(codeMirrorElement, {
-    //   mode: 'gfm',
-    //   highlightFormatting: true,
-    //   fencedCodeBlockHighlighting: true,
-    //   lineNumbers: false,
-    //   autoCloseBrackets: true,
-    //   matchBrackets: true,
-    //   showCursorWhenSelecting: true,
-    //   lineWrapping: true,
-    //   extraKeys: { Enter: 'newlineAndIndentContinueMarkdownList' }
-    // })
-  },
   methods: {
-    handleEditorChange(value, render) {
-      this.initBlog()
-    },
     async initBlog(blogId) {
       if (blogId) {
         this.blogEditorStatus = 'update'
         const { data } = await this.$axios.$get(`blogs/${blogId}`)
-        data.category = data.category._id || ''
+        data.category = data.category ? data.category._id : ''
         data.tags = data.tags ? data.tags.map(item => item._id) : []
         this.formData = data
+      } else {
+        this.blogEditorStatus = 'create'
+        this.formData = {
+          title: '',
+          overView: '',
+          content: '',
+          category: '',
+          tags: [],
+          cover: ''
+        }
       }
     },
     async saveDataToDraft() {},
