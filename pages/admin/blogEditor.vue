@@ -2,7 +2,7 @@
   <!-- 编辑文章 -->
   <el-row :gutter="10" class="blog-create">
     <el-col :span="19" class="editor-container">
-      <el-card class="blog-create">
+      <el-card>
         <no-ssr>
           <mavon-editor
             ref="md"
@@ -16,7 +16,7 @@
       </el-card>
     </el-col>
     <el-col :span="5" class="form-container">
-      <el-card class="blog-create">
+      <el-card>
         <el-form ref="form" label-position="top" :model="formData" :rules="formRules" style="height:100%">
           <el-form-item label="标题" prop="title">
             <el-input v-model.trim="formData.title" clearable placeholder="请输入" style="width:100%" />
@@ -169,16 +169,25 @@ export default {
   & > div {
     height: 100%;
   }
+  .el-card {
+    height: 100%;
+    .el-card__body {
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+  }
   .editor-container .el-card__body {
-    padding: 0px !important;
-    height: 100% !important;
+    padding: 0px;
+    height: 100%;
   }
   .form-container .el-card__body {
-    padding: 10px !important;
-    height: 100% !important;
+    padding: 10px;
+    height: 100%;
   }
   .v-note-wrapper {
     height: 100%;
+    z-index: 3 !important;
     .v-note-op {
       border: none;
       .op-icon {

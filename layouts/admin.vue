@@ -44,8 +44,8 @@
         </div>
       </div>
     </el-header>
-    <el-container>
-      <el-main class="main">
+    <el-container class="main">
+      <el-main>
         <el-breadcrumb separator-class="el-icon-arrow-right">
           <el-breadcrumb-item :to="{ path: '/admin/newIndex' }">控制台</el-breadcrumb-item>
           <el-breadcrumb-item>内容管理</el-breadcrumb-item>
@@ -116,6 +116,7 @@ export default {
     padding: 0px;
   }
   .main {
+    overflow: scroll;
     background: #f0f2f5;
     .el-breadcrumb {
       height: 30px;
@@ -127,7 +128,7 @@ export default {
       height: calc(100% - 40px);
       position: relative;
       overflow: hidden;
-      .el-card {
+      & > .el-card {
         height: 100%;
         .el-card__header {
           height: 50px;
