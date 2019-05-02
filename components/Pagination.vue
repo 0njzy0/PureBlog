@@ -38,6 +38,8 @@ export default {
   },
   methods: {
     handlePage(page) {
+      // 解决分页时页面不返回顶部的问题
+      document.documentElement.scrollTop = 0
       if (page == 1) {
         this.$router.push({ path: this.path })
       } else {

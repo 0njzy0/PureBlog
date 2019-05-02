@@ -3,7 +3,7 @@
     <v-navigation-drawer v-model="drawer" app>
       <v-list>
         <v-subheader>导航</v-subheader>
-        <v-list-tile to="/">
+        <v-list-tile @click="handleGoHome">
           <v-list-tile-title>首页</v-list-tile-title>
         </v-list-tile>
         <v-list-tile to="/archive">
@@ -37,7 +37,7 @@
         <v-toolbar-side-icon class="hidden-md-and-up mx-0" @click.stop="drawer = !drawer" />
         <v-toolbar-title class="ml-0 mr-2">PureBlog</v-toolbar-title>
         <v-toolbar-items class="hidden-sm-and-down">
-          <v-btn flat to="/">首页</v-btn>
+          <v-btn flat @click="handleGoHome">首页</v-btn>
           <v-btn flat to="/archive">归档</v-btn>
           <v-btn flat to="/about">关于</v-btn>
         </v-toolbar-items>
@@ -63,6 +63,15 @@ export default {
   data() {
     return {
       drawer: false
+    }
+  },
+  methods: {
+    // 解决在首页分页返回首页页面不返回顶部的问题
+    handleGoHome() {
+      if (this.$route.name == 'index') {
+        document.documentElement.scrollTop = 0
+      }
+      this.$router.push('/')
     }
   }
 }
