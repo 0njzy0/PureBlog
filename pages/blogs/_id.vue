@@ -44,6 +44,17 @@ export default {
     } catch (e) {
       error({ statusCode: 404, message: `获取博文信息失败:${e.message}` })
     }
+  },
+  mounted() {
+    this.addViewCount()
+  },
+  methods: {
+    addViewCount() {
+      const id = this.$route.params.id
+      if (id) {
+        this.$axios.$patch(`/blogs/${id}/views`, { view: true })
+      }
+    }
   }
 }
 </script>

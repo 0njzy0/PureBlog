@@ -36,10 +36,10 @@
           <v-layout>
             <v-icon size="18" color="grey lighten-1">mdi-timer</v-icon>
             <span class="mx-1">{{ $formatTime(blog.createTime) }}</span>
-            <v-icon size="18" color="grey lighten-1">mdi-heart-outline</v-icon>
-            <span class="mx-1">{{ blog.likes.length }}</span>
             <v-icon size="18" color="grey lighten-1">mdi-eye-outline</v-icon>
             <span class="mx-1">{{ blog.views }}</span>
+            <v-icon size="18" color="grey lighten-1">mdi-heart-outline</v-icon>
+            <span class="mx-1">{{ blog.likes.length }}</span>
           </v-layout>
         </div>
         <v-spacer />
