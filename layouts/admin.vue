@@ -84,12 +84,7 @@ export default {
         {
           name: '系统管理',
           index: '3',
-          children: [
-            { icon: 'mdi-package-variant', name: '资源管理', index: '3-1' },
-            { icon: 'mdi-comment', name: '评论管理', index: '3-2' },
-            { icon: 'mdi-account', name: '用户管理', index: '3-3' },
-            { icon: 'mdi-settings', name: '系统设置', index: '3-4' }
-          ]
+          children: [{ icon: 'mdi-account', name: '用户管理', index: '3-1', url: '/admin/userManage' }]
         }
       ]
     }

@@ -9,10 +9,26 @@
     </div>
     <el-table :data="list" height="auto">
       <el-table-column prop="title" label="标题" min-width="150" />
-      <el-table-column prop="overView" label="概述" min-width="150" />
+      <el-table-column prop="overView" label="概述" min-width="150">
+        <template slot-scope="{ row }">
+          <span v-if="row.overView">{{ row.overView }}</span>
+          <span v-else>无</span>
+        </template>
+      </el-table-column>
       <el-table-column prop="author.name" label="作者" />
-      <el-table-column prop="category.name" label="类别" />
-      <el-table-column prop="status" label="状态" />
+      <el-table-column prop="category.name" label="类别">
+        <template slot-scope="{ row }">
+          <span v-if="row.category">{{ row.category.name }}</span>
+          <span v-else>其他</span>
+        </template>
+      </el-table-column>
+      <el-table-column prop="status" label="状态">
+        <template slot-scope="{ row }">
+          <span v-if="row.status == 0">禁用</span>
+          <span v-else-if="row.status == 1">已发布</span>
+          <span v-else-if="row.status == 2">草稿</span>
+        </template>
+      </el-table-column>
       <el-table-column prop="createTime" label="创建时间">
         <template slot-scope="{ row }">
           <span>{{ row.createTime ? $dayjs(row.createTime).format('YYYY-MM-DD HH:mm') : '' }}</span>
@@ -20,7 +36,10 @@
       </el-table-column>
       <el-table-column prop="updateTime" label="更新时间">
         <template slot-scope="{ row }">
-          <span>{{ row.updateTime ? $dayjs(row.updateTime).format('YYYY-MM-DD HH:mm') : '' }}</span>
+          <span v-if="row.updateTime">
+            {{ row.updateTime ? $dayjs(row.updateTime).format('YYYY-MM-DD HH:mm') : '' }}
+          </span>
+          <span v-else>无更新</span>
         </template>
       </el-table-column>
       <el-table-column fixed="right" label="操作">
@@ -66,6 +85,7 @@ export default {
   data: () => ({
     apiSuffix: 'blogs',
     listQuery: {
+      title: '',
       page: 1,
       limit: 20
     },

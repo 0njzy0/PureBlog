@@ -12,6 +12,12 @@
     </div>
     <el-table :data="list" height="auto">
       <el-table-column prop="name" label="名称" />
+      <el-table-column prop="status" label="状态">
+        <template slot-scope="{ row }">
+          <span v-if="row.status == 0">禁用</span>
+          <span v-else-if="row.status == 1">正常</span>
+        </template>
+      </el-table-column>
       <el-table-column fixed="right" label="操作">
         <template slot-scope="{ row }">
           <el-button type="text" size="small" icon="el-icon-edit" @click="handleUpdate(row)">修改</el-button>

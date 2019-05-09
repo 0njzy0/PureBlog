@@ -10,7 +10,7 @@
       </el-form-item>
       <el-form-item>
         <el-button type="primary" @click="handleLogin">登录</el-button>
-        <el-button plain>注册</el-button>
+        <!-- <el-button plain>注册</el-button> -->
       </el-form-item>
     </el-form>
   </div>
