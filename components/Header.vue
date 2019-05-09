@@ -43,13 +43,24 @@
         </v-toolbar-items>
         <v-spacer />
         <v-flex md3>
-          <v-text-field
+          <v-autocomplete
+            v-model="select"
+            :search-input.sync="search"
+            :loading="loading"
+            :items="items"
+            item-text="title"
+            item-value="_id"
+            dont-fill-mask-blanks
             light
             solo
+            hide-no-data
+            hide-selected
+            clearable
             prepend-inner-icon="mdi-magnify"
             background-color="primary lighten-3"
             color="white"
-            class="hidden-sm-and-down pl-2"
+            class="hidden-sm-and-down pl-2 hide-selectIcon"
+            @change="handleChange"
           />
         </v-flex>
       </v-container>
@@ -62,7 +73,20 @@ export default {
   name: 'Header',
   data() {
     return {
-      drawer: false
+      drawer: false,
+      loading: false,
+      items: [],
+      search: null,
+      select: null
+    }
+  },
+  watch: {
+    search(val) {
+      if (!val) {
+        this.items = []
+      } else if (val && val !== this.select) {
+        this.querySelections(val)
+      }
     }
   },
   methods: {
@@ -72,6 +96,19 @@ export default {
         document.documentElement.scrollTop = 0
       }
       this.$router.push('/')
+    },
+    handleChange(id) {
+      if (id) {
+        this.search = ''
+        this.select = ''
+        this.$router.push(`/blogs/${id}`)
+      }
+    },
+    async querySelections(v) {
+      this.loading = true
+      const { data } = await this.$axios.$get(`/blogs?title=${v}`)
+      this.items = data
+      this.loading = false
     }
   }
 }
@@ -94,6 +131,9 @@ export default {
     .v-input__slot {
       margin-bottom: 0px;
     }
+  }
+  .hide-selectIcon .v-input__control .v-select__slot .v-input__append-inner:last-child {
+    display: none;
   }
 }
 </style>
