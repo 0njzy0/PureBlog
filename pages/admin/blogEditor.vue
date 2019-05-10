@@ -41,7 +41,6 @@
               :show-file-list="false"
               :before-upload="upload"
               :auto-upload="true"
-              :limit="1"
               style="width:100%"
             >
               <img v-if="formData.cover" :src="formData.cover" class="cover" />
@@ -153,6 +152,7 @@ export default {
             type: 'success',
             message: '发布成功!'
           })
+          this.$router.push('/admin/blogManage')
         }
       }
     },
