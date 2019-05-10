@@ -17,6 +17,8 @@
 </template>
 
 <script>
+const Cookie = process.client ? require('js-cookie') : undefined
+
 export default {
   layout: 'login',
   data() {
@@ -43,6 +45,7 @@ export default {
             type: 'success',
             duration: 1200
           })
+          Cookie.set('auth', res.data.token)
           this.$store.commit('setToken', res.data.token)
           this.$router.push('/admin')
         }

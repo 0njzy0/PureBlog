@@ -1,3 +1,5 @@
+const cookieparser = process.server ? require('cookieparser') : undefined
+
 export const state = () => ({
   theme: '',
   token: '',
@@ -19,7 +21,13 @@ export const mutations = {
 }
 
 export const actions = {
-  async nuxtServerInit({ dispatch }, { app, error }) {
+  async nuxtServerInit({ dispatch, commit }, { req, app, error }) {
+    let auth = ''
+    if (req.headers.cookie) {
+      const parsed = cookieparser.parse(req.headers.cookie)
+      auth = parsed.auth
+    }
+    commit('setToken', auth)
     await dispatch('loadTagsAndCategories', {
       app,
       error
