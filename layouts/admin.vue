@@ -36,7 +36,7 @@
         <div class="right-menu">
           <div class="edit-button">
             <el-button size="mini" icon="mdi mdi-lead-pencil" @click="handleCreateBlog" />
-            <el-button size="mini" icon="mdi mdi-fullscreen" />
+            <el-button size="mini" icon="mdi mdi-logout-variant" @click="handleLogout" />
           </div>
           <div class="avatar">
             <img src="https://cdn.vuetifyjs.com/images/logos/logo.svg" alt="Vuetify" />
@@ -63,6 +63,8 @@
 </template>
 
 <script>
+const Cookie = process.client ? require('js-cookie') : undefined
+
 export default {
   head() {
     return {
@@ -106,6 +108,11 @@ export default {
     handleCreateBlog() {
       this.breadcrumbs = []
       this.$router.push('/admin/blogEditor')
+    },
+    handleLogout() {
+      Cookie.remove('auth')
+      this.$store.commit('setToken', null)
+      this.$router.push('/admin/login')
     }
   }
 }
