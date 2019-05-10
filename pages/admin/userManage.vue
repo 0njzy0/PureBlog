@@ -19,7 +19,7 @@
           <span v-else>无</span>
         </template>
       </el-table-column>
-      <el-table-column prop="email" label="角色" />
+      <el-table-column prop="role" label="角色" />
       <el-table-column prop="status" label="状态">
         <template slot-scope="{ row }">
           <span v-if="row.status == 0">禁用</span>
