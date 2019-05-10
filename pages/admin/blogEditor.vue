@@ -35,12 +35,17 @@
             </el-select>
           </el-form-item>
           <el-form-item label="封面">
-            <el-upload drag action="https://jsonplaceholder.typicode.com/posts/" style="width:100%">
-              <i class="el-icon-upload" />
-              <div class="el-upload__text">
-                将文件拖到此处，或
-                <em>点击上传</em>
-              </div>
+            <el-upload
+              class="cover-uploader"
+              action="#"
+              :show-file-list="false"
+              :before-upload="upload"
+              :auto-upload="true"
+              :limit="1"
+              style="width:100%"
+            >
+              <img v-if="formData.cover" :src="formData.cover" class="cover" />
+              <i v-else class="el-icon-plus cover-uploader-icon" />
             </el-upload>
           </el-form-item>
         </el-form>
@@ -158,6 +163,19 @@ export default {
       } catch (error) {
         return false
       }
+    },
+    async upload(file) {
+      var fd = new window.FormData()
+      fd.append('blog', file)
+      const res = await this.$axios.$post('/blogs/cover', fd)
+      if (res && res.success) {
+        this.formData.cover = res.data
+        this.$message({
+          type: 'success',
+          message: '封面上传成功!'
+        })
+      }
+      return false
     }
   }
 }
@@ -214,6 +232,29 @@ export default {
   .el-upload,
   .el-upload-dragger {
     width: 100%;
+  }
+  .cover-uploader .el-upload {
+    border: 1px dashed #d9d9d9;
+    border-radius: 6px;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+  }
+  .cover-uploader .el-upload:hover {
+    border-color: #409eff;
+  }
+  .cover-uploader-icon {
+    font-size: 28px;
+    color: #8c939d;
+    width: 178px;
+    height: 178px;
+    line-height: 178px;
+    text-align: center;
+  }
+  .cover {
+    width: 100%;
+    height: 178px;
+    display: block;
   }
 }
 </style>
