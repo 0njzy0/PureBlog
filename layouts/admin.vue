@@ -5,7 +5,7 @@
         <div class="logo">PureBlog-Admin</div>
         <div class="nav">
           <el-menu
-            :default-active="activeIndex"
+            :default-active="$route.path"
             mode="horizontal"
             :router="true"
             background-color="#001429"
@@ -47,12 +47,15 @@
     <el-container class="main">
       <el-main>
         <el-breadcrumb separator-class="el-icon-arrow-right">
-          <el-breadcrumb-item :to="{ path: '/admin/newIndex' }">控制台</el-breadcrumb-item>
-          <el-breadcrumb-item>内容管理</el-breadcrumb-item>
-          <el-breadcrumb-item>文章管理</el-breadcrumb-item>
+          <el-breadcrumb-item :to="{ path: '/admin' }">控制台</el-breadcrumb-item>
+          <template v-if="breadcrumbs.length">
+            <el-breadcrumb-item v-for="(item, index) in breadcrumbs" :key="index">{{ item }}</el-breadcrumb-item>
+          </template>
         </el-breadcrumb>
         <div class="main-card">
-          <nuxt />
+          <no-ssr>
+            <nuxt />
+          </no-ssr>
         </div>
       </el-main>
     </el-container>
@@ -69,31 +72,39 @@ export default {
   middleware: 'auth',
   data() {
     return {
-      activeIndex: '/admin',
       menus: [
-        { icon: 'mdi-view-dashboard', name: '控制台', index: '1', url: '/admin' },
+        { name: '控制台', index: '1', url: '/admin' },
         {
           name: '内容管理',
           index: '2',
           children: [
-            { icon: 'mdi-file-document', name: '文章管理', index: '2-1', url: '/admin/blogManage' },
-            { icon: 'mdi-equal-box', name: '类别管理', index: '2-2', url: '/admin/categoryManage' },
-            { icon: 'mdi-tag', name: '标签管理', index: '2-3', url: '/admin/tagManage' }
+            { name: '文章管理', index: '2-1', url: '/admin/blogManage' },
+            { name: '类别管理', index: '2-2', url: '/admin/categoryManage' },
+            { name: '标签管理', index: '2-3', url: '/admin/tagManage' }
           ]
         },
         {
           name: '系统管理',
           index: '3',
-          children: [{ icon: 'mdi-account', name: '用户管理', index: '3-1', url: '/admin/userManage' }]
+          children: [{ name: '用户管理', index: '3-1', url: '/admin/userManage' }]
         }
-      ]
+      ],
+      breadcrumbs: []
     }
   },
   methods: {
     handleSelect(key, keyPath) {
-      console.log(key, keyPath)
+      let arr = keyPath
+      if (arr.length == 2) {
+        let menu = this.menus.find(item => item.index == arr[0])
+        let subMenu = menu.children.find(item => item.url == arr[1])
+        this.breadcrumbs = [menu.name, subMenu.name]
+      } else {
+        this.breadcrumbs = []
+      }
     },
     handleCreateBlog() {
+      this.breadcrumbs = []
       this.$router.push('/admin/blogEditor')
     }
   }
