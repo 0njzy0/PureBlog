@@ -27,7 +27,7 @@
             </v-layout>
           </v-flex>
           <v-flex v-if="blog.cover" xs12 md4 order-md2 order-xs1>
-            <v-img v-if="blog.cover" height="150px" :src="blog.cover" />
+            <v-img v-if="blog.cover" class="blog-img" height="150px" :src="blog.cover" />
           </v-flex>
         </v-layout>
       </v-card-title>
@@ -61,7 +61,7 @@ export default {
 }
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .blog-card {
   .card-blog-title {
     max-height: 40px;
@@ -74,12 +74,19 @@ export default {
     text-overflow: ellipsis;
   }
 
+  .blog-img {
+    margin: -8px -16px 0px -16px;
+  }
+
   @media (min-width: 960px) {
     .md6-title {
       height: 40px;
     }
     .md6-overview {
       height: 80px;
+    }
+    .blog-img {
+      margin: -8px -16px 0px 0px;
     }
   }
 }

@@ -4,10 +4,10 @@
       <v-timeline dense>
         <v-timeline-item v-for="(item, index) in archive" :key="index" small>
           <template v-slot:opposite>
-            <span :class="`headline font-weight-bold`" v-text="item._id" />
+            <span class="headline font-weight-bold" v-text="item._id" />
           </template>
           <div class="py-3">
-            <h2 :class="`headline font-weight-light mb-3`">{{ item._id }}</h2>
+            <h2 class="headline font-weight-light mb-3">{{ item._id }}</h2>
             <v-card class="elevation-2">
               <v-card-text>
                 <div v-for="(blog, bIndex) in item.blogs" :key="bIndex">
@@ -39,7 +39,7 @@ export default {
 }
 </script>
 
-<style lang="postcss" scoped>
+<style lang="scss" scoped>
 a {
   text-decoration: none;
 }

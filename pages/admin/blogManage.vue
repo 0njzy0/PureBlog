@@ -7,7 +7,7 @@
         查询
       </el-button>
     </div>
-    <el-table :data="list" height="auto">
+    <el-table :data="list" height="0">
       <el-table-column prop="title" label="标题" min-width="150" />
       <el-table-column prop="overView" label="概述" min-width="150">
         <template slot-scope="{ row }">
@@ -42,7 +42,7 @@
           <span v-else>无更新</span>
         </template>
       </el-table-column>
-      <el-table-column fixed="right" label="操作">
+      <el-table-column label="操作">
         <template slot-scope="{ row }">
           <el-button type="text" size="small" icon="el-icon-edit" @click="handleUpdate(row)">修改</el-button>
           <el-button type="text" size="small" icon="el-icon-delete" @click="handleDelete(row)">删除</el-button>
